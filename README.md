@@ -1,2 +1,2 @@
 # toplog
-Loga dados do comando Linux top em json lines
+Loga dados do comando Linux **top** em json lines

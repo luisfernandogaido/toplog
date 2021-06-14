@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"regexp"
 	"strconv"
 	"strings"
@@ -49,6 +50,62 @@ type Top struct {
 	SwapFree           float64
 	SwapUsed           float64
 	SwapAvail          float64
+}
+
+func getTop(t time.Time, lines []string) (Top, error) {
+	top := Top{
+		Time: t,
+	}
+	uptime, err := getUp(lines[0])
+	if err != nil {
+		log.Fatal(err)
+	}
+	top.Up = time.Second * time.Duration(uptime)
+	avgOne, avgFive, avgFifteen, err := getLoadAverage(lines[0])
+	if err != nil {
+		return Top{}, fmt.Errorf("get top: %w", err)
+	}
+	top.LoadAverageOne = avgOne
+	top.LoadAverageFive = avgFive
+	top.LoadAverageFifteen = avgFifteen
+	tasksTotal, tasksRunning, tasksSleeping, tasksStopped, tasksZombie, err := getTasks(lines[1])
+	if err != nil {
+		return Top{}, fmt.Errorf("get top: %w", err)
+	}
+	top.TasksTotal = tasksTotal
+	top.TasksRunning = tasksRunning
+	top.TasksSleeping = tasksSleeping
+	top.TasksStopped = tasksStopped
+	top.TasksZombie = tasksZombie
+	cpusUs, cpusSy, cpusNi, cpusId, cpusWa, cpusHi, cpusSi, cpusSt, err := getCpuPercs(lines[2])
+	if err != nil {
+		return Top{}, fmt.Errorf("get top: %w", err)
+	}
+	top.CpusUs = cpusUs
+	top.CpusSy = cpusSy
+	top.CpusNi = cpusNi
+	top.CpusId = cpusId
+	top.CpusWa = cpusWa
+	top.CpusHi = cpusHi
+	top.CpusSi = cpusSi
+	top.CpusSt = cpusSt
+	memTotal, memFree, memUsed, memBuffCache, err := getMem(lines[3])
+	if err != nil {
+		return Top{}, fmt.Errorf("get top: %w", err)
+	}
+	top.MemTotal = memTotal
+	top.MemFree = memFree
+	top.MemUsed = memUsed
+	top.MemBuffCache = memBuffCache
+	swapTotal, swapFree, swapUsed, swapAvail, err := getSwap(lines[4])
+	if err != nil {
+		return Top{}, fmt.Errorf("get top: %w", err)
+	}
+	top.SwapTotal = swapTotal
+	top.SwapFree = swapFree
+	top.SwapUsed = swapUsed
+	top.SwapAvail = swapAvail
+	return top, nil
 }
 
 func getUp(line string) (int, error) {
