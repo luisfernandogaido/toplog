@@ -9,7 +9,7 @@ import (
 
 const (
 	sleepSeconds = 5
-	bufferSize   = 1
+	bufferSize   = 60
 )
 
 func main() {
