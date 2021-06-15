@@ -147,7 +147,7 @@ func getUp(line string) (int, error) {
 	}
 	if matches[7] != "" {
 		fmt.Println("4")
-		minutes, err := hourToMinutes(matches[4])
+		minutes, err := hourToMinutes(matches[7])
 		if err != nil {
 			return 0, fmt.Errorf("getup: %w", err)
 		}
