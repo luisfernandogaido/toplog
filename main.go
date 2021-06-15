@@ -7,6 +7,11 @@ import (
 	"time"
 )
 
+const (
+	sleepSeconds = 5
+	bufferSize   = 1
+)
+
 func main() {
 	tops := make([]Top, 0)
 	procs := make([]Process, 0)
@@ -38,7 +43,7 @@ AquiO:
 			}
 			procs = append(procs, proc)
 		}
-		if len(tops) == 60 {
+		if len(tops) == bufferSize {
 			if err := writeTops(tops); err != nil {
 				log.Println(err)
 				continue AquiO
@@ -50,6 +55,6 @@ AquiO:
 			tops = nil
 			procs = nil
 		}
-		time.Sleep(time.Second * 5)
+		time.Sleep(time.Second * sleepSeconds)
 	}
 }
