@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os/exec"
 	"strings"
@@ -39,9 +38,12 @@ AquiO:
 			}
 			procs = append(procs, proc)
 		}
-		fmt.Println(len(tops), len(procs))
-		if len(tops) == 5 {
+		if len(tops) == 60 {
 			if err := writeTops(tops); err != nil {
+				log.Println(err)
+				continue AquiO
+			}
+			if err := writeProcs(procs); err != nil {
 				log.Println(err)
 				continue AquiO
 			}

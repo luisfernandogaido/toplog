@@ -24,32 +24,32 @@ var (
 )
 
 type Top struct {
-	Time               time.Time
-	Up                 time.Duration
-	LoadAverageOne     float64
-	LoadAverageFive    float64
-	LoadAverageFifteen float64
-	TasksTotal         int
-	TasksRunning       int
-	TasksSleeping      int
-	TasksStopped       int
-	TasksZombie        int
-	CpusUs             float64
-	CpusSy             float64
-	CpusNi             float64
-	CpusId             float64
-	CpusWa             float64
-	CpusHi             float64
-	CpusSi             float64
-	CpusSt             float64
-	MemTotal           float64
-	MemFree            float64
-	MemUsed            float64
-	MemBuffCache       float64
-	SwapTotal          float64
-	SwapFree           float64
-	SwapUsed           float64
-	SwapAvail          float64
+	Time               time.Time `json:"time"`
+	UpSeconds          int       `json:"up_seconds"`
+	LoadAverageOne     float64   `json:"load_average_one"`
+	LoadAverageFive    float64   `json:"load_average_five"`
+	LoadAverageFifteen float64   `json:"load_average_fifteen"`
+	TasksTotal         int       `json:"tasks_total"`
+	TasksRunning       int       `json:"tasks_running"`
+	TasksSleeping      int       `json:"tasks_sleeping"`
+	TasksStopped       int       `json:"tasks_stopped"`
+	TasksZombie        int       `json:"tasks_zombie"`
+	CpusUs             float64   `json:"cpus_us"`
+	CpusSy             float64   `json:"cpus_sy"`
+	CpusNi             float64   `json:"cpus_ni"`
+	CpusId             float64   `json:"cpus_id"`
+	CpusWa             float64   `json:"cpus_wa"`
+	CpusHi             float64   `json:"cpus_hi"`
+	CpusSi             float64   `json:"cpus_si"`
+	CpusSt             float64   `json:"cpus_st"`
+	MemTotal           float64   `json:"mem_total"`
+	MemFree            float64   `json:"mem_free"`
+	MemUsed            float64   `json:"mem_used"`
+	MemBuffCache       float64   `json:"mem_buff_cache"`
+	SwapTotal          float64   `json:"swap_total"`
+	SwapFree           float64   `json:"swap_free"`
+	SwapUsed           float64   `json:"swap_used"`
+	SwapAvail          float64   `json:"swap_avail"`
 }
 
 func getTop(t time.Time, lines []string) (Top, error) {
@@ -60,7 +60,7 @@ func getTop(t time.Time, lines []string) (Top, error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	top.Up = time.Second * time.Duration(uptime)
+	top.UpSeconds = uptime
 	avgOne, avgFive, avgFifteen, err := getLoadAverage(lines[0])
 	if err != nil {
 		return Top{}, fmt.Errorf("get top: %w", err)

@@ -8,19 +8,19 @@ import (
 )
 
 type Process struct {
-	Time        time.Time
-	Pid         int
-	User        string
-	Pr          string
-	Ni          int
-	Virt        float64
-	Res         float64
-	Shr         float64
-	S           string
-	PercCpu     float64
-	PercMem     float64
-	TimeSeconds float64
-	Command     string
+	Time        time.Time `json:"time"`
+	Pid         int       `json:"pid"`
+	User        string    `json:"user"`
+	Pr          string    `json:"pr"`
+	Ni          int       `json:"ni"`
+	Virt        float64   `json:"virt"`
+	Res         float64   `json:"res"`
+	Shr         float64   `json:"shr"`
+	S           string    `json:"s"`
+	PercCpu     float64   `json:"perc_cpu"`
+	PercMem     float64   `json:"perc_mem"`
+	TimeSeconds float64   `json:"time_seconds"`
+	Command     string    `json:"command"`
 }
 
 func getProcess(t time.Time, line string) (Process, error) {
