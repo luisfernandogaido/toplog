@@ -114,6 +114,7 @@ func getUp(line string) (int, error) {
 		return 0, fmt.Errorf("getup: len(maches) != 8 em %v", line)
 	}
 	if matches[2] != "" {
+		fmt.Println("1")
 		minutes, err := hourToMinutes("00:" + matches[2])
 		if err != nil {
 			return 0, fmt.Errorf("getup: %w", err)
@@ -121,6 +122,7 @@ func getUp(line string) (int, error) {
 		return 60 * minutes, nil
 	}
 	if matches[3] != "" && matches[4] != "" && matches[6] == "" {
+		fmt.Println("2")
 		days, err := strconv.Atoi(matches[3])
 		if err != nil {
 			return 0, fmt.Errorf("getup: %w", err)
@@ -132,6 +134,7 @@ func getUp(line string) (int, error) {
 		return 86400*days + 60*minutes, nil
 	}
 	if matches[3] != "" && matches[6] != "" {
+		fmt.Println("3")
 		days, err := strconv.Atoi(matches[3])
 		if err != nil {
 			return 0, fmt.Errorf("getup: %w", err)
@@ -143,6 +146,7 @@ func getUp(line string) (int, error) {
 		return 86400*days + 60*minutes, nil
 	}
 	if matches[7] != "" {
+		fmt.Println("4")
 		minutes, err := hourToMinutes(matches[4])
 		if err != nil {
 			return 0, fmt.Errorf("getup: %w", err)
